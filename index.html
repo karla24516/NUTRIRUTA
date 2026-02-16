@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NUTRIFRUTA • Hábitos saludables</title>
+  <meta name="description" content="Registra tu alimentación, analiza nutrientes, recibe recomendaciones y retos saludables." />
+  <link rel="icon" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="Logo NUTRIRUTA" onerror="this.style.display='none'"/>
+      <div class="title">
+        <h1><span class="brand-green">NUTRI</span><span class="brand-orange">FRUTA</span></h1>
+        <small>Mejora tus hábitos alimenticios</small>
+      </div>
+    </div>
+    <div class="profile">
+      <label>Objetivo calórico (kcal)
+        <input id="calTarget" type="number" min="1200" max="4000" step="50" value="2000" />
+      </label>
+      <button id="saveProfile" class="btn">Guardar</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card" id="registro">
+      <h2>Registro de comidas</h2>
+      <form id="foodForm" autocomplete="off">
+        <div class="row">
+          <label>Fecha
+            <input type="date" id="date" required />
+          </label>
+          <label>Alimento
+            <input list="foods" id="food" placeholder="Ej: Manzana, Arroz, Pollo..." required />
+            <datalist id="foods"></datalist>
+          </label>
+          <label>Porción (g)
+            <input type="number" id="grams" min="1" step="1" value="100" required />
+          </label>
+        </div>
+        <div class="row micro">
+          <label>Azúcares (g)<input type="number" id="sugars" step="0.1" /></label>
+          <label>Grasa sat. (g)<input type="number" id="satfat" step="0.1" /></label>
+          <label>Sodio (mg)<input type="number" id="sodium" step="1" /></label>
+          <label>Fibra (g)<input type="number" id="fiber" step="0.1" /></label>
+          <label>Calorías (kcal)<input type="number" id="kcal" step="1" /></label>
+        </div>
+        <div class="actions">
+          <button class="btn primary" type="submit">Agregar</button>
+          <button class="btn" type="button" id="clearForm">Limpiar</button>
+          <button class="btn" type="button" id="exportBtn">Exportar</button>
+          <label class="importLabel btn">
+            Importar
+            <input id="importFile" type="file" accept="application/json" hidden />
+          </label>
+        </div>
+      </form>
+
+      <div id="logTableWrap">
+        <table id="logTable">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Alimento</th>
+              <th>g</th>
+              <th>kcal</th>
+              <th>Azúcares</th>
+              <th>Sat.</th>
+              <th>Sodio</th>
+              <th>Fibra</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" id="analisis">
+      <h2>Análisis diario</h2>
+      <div class="summary">
+        <div class="sum">
+          <div class="label">Calorías</div>
+          <div class="value" id="sumKcal">0</div>
+          <div class="hint">Objetivo <span id="sumKcalTarget">2000</span></div>
+        </div>
+        <div class="sum">
+          <div class="label">Azúcares</div>
+          <div class="value" id="sumSugar">0 g</div>
+          <div class="light" id="lightSugar"></div>
+        </div>
+        <div class="sum">
+          <div class="label">Sat. grasa</div>
+          <div class="value" id="sumSat">0 g</div>
+          <div class="light" id="lightSat"></div>
+        </div>
+        <div class="sum">
+          <div class="label">Sodio</div>
+          <div class="value" id="sumNa">0 mg</div>
+          <div class="light" id="lightNa"></div>
+        </div>
+        <div class="sum">
+          <div class="label">Fibra</div>
+          <div class="value" id="sumFiber">0 g</div>
+          <div class="light" id="lightFiber"></div>
+        </div>
+      </div>
+      <div id="recoms" class="recoms"></div>
+      <div class="day-nav">
+        <button class="btn" id="prevDay">◀ Día anterior</button>
+        <input type="date" id="activeDate" />
+        <button class="btn" id="nextDay">Día siguiente ▶</button>
+      </div>
+    </section>
+
+    <section class="card" id="estadisticas">
+      <h2>Estadísticas (últimos 7 días)</h2>
+      <canvas id="weeklyChart" height="110"></canvas>
+    </section>
+
+    <section class="card" id="retos">
+      <h2>Retos saludables</h2>
+      <ul id="challenges" class="challenges"></ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Basado en pautas de la OMS para adultos. Uso educativo.</p>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
+
